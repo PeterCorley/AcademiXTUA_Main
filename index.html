@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Academix - Professional learning hub</title>
+<meta name="description" content="A clean, formal learning hub. Calm UI, structured navigation, and complete subject notes with links to interactive minigames."/>
+
+<meta name="color-scheme" content="light"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+<style>
+:root {
+  /* Palette */
+  --bg: #F8FAFD;
+  --surface: #FFFFFF;
+  --ink: #0E1A2A;
+  --muted: #5B6B82;
+  --muted-2: #3E5065;
+  --brand: #0A2A66;
+  --brand-600: #082451;
+  --brand-700: #061D40;
+  --accent: #1565C0;
+  --accent-600: #0D4FA0;
+  --accent-700: #093D7E;
+  --border: #D7DFEA;
+  --soft: #EEF2F7;
+
+  /* Layout rhythm */
+  --radius-s: 10px;
+  --radius-m: 14px;
+  --radius-l: 18px;
+  --space-xs: 6px;
+  --space-s: 10px;
+  --space-m: 16px;
+  --space-l: 24px;
+  --space-xl: 42px;
+
+  /* Shadow */
+  --shadow-1: 0 10px 24px rgba(6, 29, 64, 0.08);
+  --shadow-2: 0 16px 36px rgba(6, 29, 64, 0.12);
+
+  /* Fonts */
+  --font-sans: "Inter","IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+}
+
+* { box-sizing: border-box }
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a { color: var(--accent); text-decoration: none }
+a:hover { text-decoration: underline }
+img, svg { display: block; max-width: 100% }
+:focus-visible { outline: 3px solid #7EA6E0; outline-offset: 3px; border-radius: 8px }
+.container { max-width: 1240px; margin: 0 auto; padding: 0 var(--space-l) }
+
+/* Header */
+header.site {
+  position: sticky; top: 0; z-index: 1000;
+  background: var(--brand);
+  border-bottom: 1px solid var(--brand);
+  color: #FFFFFF;
+}
+.brand-row {
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: var(--space-l); align-items: center; padding: var(--space-m) 0;
+}
+.brand { display: flex; align-items: baseline; gap: 12px }
+.brand-title {
+  font-weight: 800; letter-spacing: .2px; color: #FFFFFF;
+  font-size: 20px; line-height: 1;
+}
+.brand-sub a {
+  font-size: 13px; font-weight: 600; color: #FFD700;
+}
+nav.primary { display: flex; gap: var(--space-m); flex-wrap: wrap; justify-content: center }
+nav.primary a {
+  color: #FFFFFF; padding: 10px 12px; border-radius: var(--radius-s);
+  font-weight: 600;
+}
+nav.primary a:hover { background: rgba(255,255,255,0.12); text-decoration: none }
+.header-cta { display: flex; gap: var(--space-m) }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 16px; border-radius: var(--radius-m);
+  border: 1px solid var(--border);
+  background: var(--surface); color: var(--ink); font-weight: 700;
+  box-shadow: var(--shadow-1); cursor: pointer;
+  transition: transform .12s ease, box-shadow .2s ease, background .2s ease;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-2) }
+.btn-primary {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--accent), var(--accent-600));
+  color: #fff;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F6F7FB 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 56px 0 28px;
+}
+.hero-grid { display: grid; gap: var(--space-xl); grid-template-columns: 1.1fr 0.9fr; align-items: center }
+.hero h1 {
+  margin: 0 0 12px; font-size: 38px; line-height: 1.18;
+  color: var(--brand-700);
+}
+.hero p {
+  margin: 0 0 16px; color: var(--muted); font-size: 18px;
+}
+.hero-actions { display: flex; gap: var(--space-m); flex-wrap: wrap }
+.hero-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-l); box-shadow: var(--shadow-1);
+  padding: var(--space-l);
+}
+.hero-card h3 { margin: 0 0 8px; color: var(--brand) }
+.hero-list { display: grid; gap: 8px; margin-top: 8px }
+.hero-list li { display: flex; gap: 10px }
+.point {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--accent);
+  margin-top: 6px;
+  box-shadow: 0 0 0 5px rgba(21, 101, 192, 0.14);
+}
+
+/* Layout: sidebar + content */
+.content-wrap {
+  display: grid; grid-template-columns: 300px 1fr; gap: var(--space-xl); align-items: start;
+}
+.sidebar {
+  position: sticky; top: 92px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-l); box-shadow: var(--shadow-1);
+  padding: var(--space-m);
+}
+.sidebar h3 { margin: 0 0 8px; color: var(--brand) }
+.toc { display: grid; gap: 8px }
+.toc a {
+  display: block; padding: 8px 10px; border-radius: var(--radius-s);
+  color: var(--ink); font-weight: 600;
+}
+.toc a:hover { background: var(--soft); text-decoration: none }
+.toc .group { margin-top: var(--space-m); color: var(--muted); font-weight: 700 }
+
+/* Sections */
+section { padding: 44px 0; border-top: 1px solid var(--border) }
+section h2 { margin: 0 0 8px; font-size: 28px; color: var(--brand) }
+section p.sub { margin: 0 0 22px; color: var(--muted) }
+
+/* Blocks */
+.block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-1);
+  padding: var(--space-l);
+  margin: 16px 0;
+}
+.block h3 { margin: 0 0 10px; color: var(--brand-700) }
+.block h4 { margin: 12px 0 8px; color: var(--ink) }
+.block p { margin: 8px 0 0; color: var(--muted) }
+.block ul { margin: 10px 0 0 20px }
+.block li { margin: 6px 0 }
+.columns { display: grid; gap: var(--space-l); grid-template-columns: 1fr 1fr }
+
+/* Overview cards */
+.grid { display: grid; gap: var(--space-l); grid-template-columns: repeat(3, 1fr) }
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-m); box-shadow: var(--shadow-1);
+  overflow: hidden; display: flex; flex-direction: column;
+  transition: transform .12s ease, box-shadow .2s ease;
+}
+.card:hover { transform: translateY(-1px); box-shadow: var(--shadow-2) }
+.card-header { padding: var(--space-m) var(--space-l); border-bottom: 1px solid var(--border);
+  background: #FBFCFF }
+.card-header h3 { margin: 0; font-size: 18px; color: var(--brand-700) }
+.card-body { padding: var(--space-l) }
+.card-body p { margin: 0 0 10px; color: var(--muted) }
+.card-footer {
+  padding: var(--space-m) var(--space-l); border-top: 1px solid var(--border);
+  background: var(--soft);
+  display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted);
+}
+.card a { font-weight: 700 }
+
+/* Tables */
+.table-wrap {
+  border: 1px solid var(--border); border-radius: var(--radius-m);
+  overflow: hidden; box-shadow: var(--shadow-1); background: var(--surface);
+  margin: 12px 0;
+}
+table { width: 100%; border-collapse: collapse }
+thead th {
+  background: var(--soft); border-bottom: 1px solid var(--border);
+  text-align: left; padding: 12px 14px; color: var(--muted); font-weight: 700;
+}
+tbody td { border-bottom: 1px solid var(--border); padding: 12px 14px }
+tbody tr:hover td { background: #FAFBFF }
+
+/* CTA */
+.cta {
+  margin: 24px 0; padding: var(--space-l);
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F4F7FB 100%);
+  border-radius: var(--radius-l); box-shadow: var(--shadow-1);
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--space-l);
+}
+.cta h3 { margin: 0; color: var(--brand-700) }
+.cta p { margin: 6px 0 0; color: var(--muted) }
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 36px 0; background: #FFFFFF; margin-top: 20px;
+}
+.footer-grid { display: grid; gap: var(--space-xl); grid-template-columns: 1.2fr 1fr 1fr 1fr }
+.footer-grid h4 { margin: 0 0 8px; color: var(--brand) }
+.footer-grid ul { list-style: none; padding: 0; margin: 0 }
+.footer-grid li { margin: 6px 0 }
+.muted { color: var(--muted) }
+.copyright {
+  margin-top: 20px; color: var(--muted); font-size: 12px;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--space-m);
+}
+
+/* Responsive */
+@media (max-width: 1140px) {
+  .hero-grid { grid-template-columns: 1fr }
+  .content-wrap { grid-template-columns: 1fr }
+  .grid { grid-template-columns: 1fr 1fr }
+  .cta { grid-template-columns: 1fr }
+}
+@media (max-width: 740px) {
+  nav.primary { display: none }
+  .grid { grid-template-columns: 1fr }
+  .hero h1 { font-size: 32px }
+}
+</style>
+</head>
+<body>
+<!-- Header -->
+<header class="site" role="banner" aria-label="Top navigation">
+  <div class="container brand-row">
+    <div class="brand">
+      <div class="brand-title">Academix</div>
+      <div class="brand-sub">
+        <a href="https://sites.google.com/view/ciphertech1/home" target="_blank" rel="noopener">
+          Click here to filter fake news using A.I
+        </a>
+      </div>
+    </div>
+    <nav class="primary" aria-label="Primary">
+      <a href="#overview">Overview</a>
+      <a href="#christian-ed">Christian Ed</a>
+      <a href="#pfpl">PFPL</a>
+      <a href="#political-science">Political Science</a>
+      <a href="#biology">Biology</a>
+      <a href="#ucsp">UCSP</a>
+      <a href="#physics">Physics</a>
+      <a href="#chemistry">Chemistry</a>
+      <a href="#mandarin">Mandarin</a>
+      <a href="#intramurals">Intramurals</a>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn-primary" href="https://academixtua.vercel.app/" target="_blank" rel="noopener">Play Minigames!</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="overview" aria-label="Site overview">
+  <div class="container hero-grid">
+    <div>
+      <h1 class="headline">Academic excellence for the future</h1>
+      <p>Empowering students through interactive learning by combining technology, creativity, and scientific realism to make education immersive and impactful.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#pfpl">Start PFPL</a>
+        <a class="btn" href="#chemistry">Review Chemistry</a>
+        <a class="btn" href="#mandarin">Study Mandarin</a>
+      </div>
+    </div>
+    <div class="hero-card" aria-labelledby="heroCardTitle">
+      <h3 id="heroCardTitle">Why it works</h3>
+      <ul class="hero-list">
+        <li><span class="point" aria-hidden="true"></span><strong>Clarity:</strong> Structured design, balanced spacing, and clear tone keep focus effortless.</li>
+        <li><span class="point" aria-hidden="true"></span><strong>Depth:</strong> Detailed content paired with practical cases and guiding cues.</li>
+        <li><span class="point" aria-hidden="true"></span><strong>Flow:</strong> Persistent navigation and seamless flow keep users engaged.</li>
+        <li><span class="point" aria-hidden="true"></span><strong>Bridge:</strong> Minigames.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Subject overview cards + sticky sidebar -->
+<section id="subjects">
+  <div class="container">
+    <div class="content-wrap">
+      <aside class="sidebar">
+        <h3>Table of contents</h3>
+        <div class="toc">
+          <a href="#christian-ed">Christian Ed</a>
+          <a href="#pfpl">PFPL</a>
+          <a href="#political-science">Political Science</a>
+          <a href="#biology">Biology</a>
+          <a href="#ucsp">UCSP</a>
+          <a href="#physics">Physics</a>
+          <a href="#chemistry">Chemistry</a>
+          <a href="#mandarin">Mandarin</a>
+          <a href="#intramurals">Intramurals</a>
+          <div class="group">Tools</div>
+          <a href="#play">Minigames</a>
+        </div>
+      </aside>
+
+      <div>
+        <h2>Subjects overview</h2>
+        <p class="sub">Use these cards to jump to the complete modules.</p>
+        <div class="grid">
+          <div class="card">
+            <div class="card-header"><h3>Christian Ed</h3></div>
+            <div class="card-body"><p>John the Baptist, Baptism, Temptations, sacramental context, and loving service in mission.</p></div>
+            <div class="card-footer"><span>Depth: Extended</span><a href="#christian-ed">Open</a></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>PFPL</h3></div>
+            <div class="card-body"><p>Sanaysay forms, buod, sintesis, bionote, katitikan, agenda, panukala, talumpati — definitions and checklists.</p></div>
+            <div class="card-footer"><span>Depth: Extended</span><a href="#pfpl">Open</a></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Political Science</h3></div>
+            <div class="card-body"><p>Foundations of governance, power and authority, stages of thought, and Philippine system overview.</p></div>
+            <div class="card-footer"><span>Depth: Extended</span><a href="#political-science">Open</a></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Biology</h3></div>
+            <div class="card-body"><p>Circulatory systems, pathways, heart conduction and control, osmoregulation, and disease.</p></div>
+            <div class="card-footer"><span>Depth: Extended</span><a href="#biology">Open</a></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>UCSP</h3></div>
+            <div class="card-body"><p>Socialization pillars, mechanisms, consequences, identity theories, norms, statuses, roles.</p></div>
+            <div class="card-footer"><span>Depth: Extended</span><a href="#ucsp">Open</a></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Physics</h3></div>
+            <div class="card-body"><p>Core forces, free body diagrams, friction, and Newton's First Law scenarios.</p></div>
+            <div class="card-footer"><span>Depth: Extended</span><a href="#physics">Open</a></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Chemistry</h3></div>
+            <div class="card-body"><p>Solubility drivers, electrolytes vs non-electrolytes, vapor pressure, concentration expressions.</p></div>
+            <div class="card-footer"><span>Depth: Extended</span><a href="#chemistry">Open</a></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Mandarin</h3></div>
+            <div class="card-body"><p>Family, hobbies, food and drinks vocabulary, sentence frames, tones, and study routine.</p></div>
+            <div class="card-footer"><span>Depth: Extended</span><a href="#mandarin">Open</a></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Intramurals</h3></div>
+            <div class="card-body"><p>Eligibility, line-ups, conduct, protests, format, ranking procedure, and event mechanics.</p></div>
+            <div class="card-footer"><span>Depth: Complete</span><a href="#intramurals">Open</a></div>
+          </div>
+        </div>
+
+        <div class="cta" id="play">
+          <div>
+            <h3>Practice through play</h3>
+            <p>Reinforce concepts with interactive minigames. Launch in a new tab and apply what you've learned.</p>
+          </div>
+          <a class="btn btn-primary" href="https://academixtua.vercel.app/" target="_blank" rel="noopener">Open minigames</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Christian Ed -->
+<section id="christian-ed">
+  <div class="container">
+    <h2>Christian Ed: preparation for ministry, sacraments, loving service</h2>
+    <p class="sub">Prophetic foundation (John the Baptist), Baptism as inauguration, Temptations and moral clarity, Anglican sacramental context, and service as mission.</p>
+
+    <div class="block">
+      <h3>John the Baptist: role, context, message</h3>
+      <div class="columns">
+        <div>
+          <h4>Prophetic role and urgency</h4>
+          <ul>
+            <li><strong>Herald:</strong> Calls for repentance and readiness for God's reign; signals decisive divine action.</li>
+            <li><strong>Eschatological tone:</strong> Urgency for ethical reorientation and concrete fruit.</li>
+            <li><strong>Fruit of repentance:</strong> Generosity, honesty, fairness — practical signs of transformed life.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Historical context and core call</h4>
+          <ul>
+            <li><strong>Isaiah's fulfillment:</strong> “Prepare the way of the Lord” situates John within prophetic expectation.</li>
+            <li><strong>Core call:</strong> “Repent, for the kingdom of heaven has come near” — immediate and actionable.</li>
+            <li><strong>Humility:</strong> Points to one “more powerful,” cultivating anticipation for Jesus' mission.</li>
+          </ul>
+          <p>John's ministry disposes hearts toward receptive obedience, linking repentance to visible ethical fruit in community life.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Baptism of Jesus: identity, inauguration, solidarity</h3>
+      <div class="columns">
+        <div>
+          <h4>Event and meaning</h4>
+          <ul>
+            <li><strong>Divine affirmation:</strong> Spirit descends; voice declares beloved sonship.</li>
+            <li><strong>Public commencement:</strong> Sets Jesus' mission in motion with clarity of vocation.</li>
+            <li><strong>Solidarity:</strong> Identifies with humanity; fulfills righteousness; anticipates sacrificial service.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Anglican sacramental frame</h4>
+          <ul>
+            <li><strong>Dominical sacraments:</strong> Baptism and Eucharist instituted by Christ; ground identity and mission.</li>
+            <li><strong>Seven sacraments:</strong> Baptism, Eucharist, Confirmation, Reconciliation, Marriage, Ordination, Anointing.</li>
+            <li><strong>Visible signs:</strong> Outward rites mediating inward grace in communal practice.</li>
+          </ul>
+          <p>Sacraments weave personal transformation into the Church's shared mission, shaping ethical identity and service.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Temptation narratives: mapping and emphasis</h3>
+      <div class="table-wrap" role="table" aria-label="Temptation order">
+        <table>
+          <thead><tr><th>Temptation</th><th>Matthew 4:1–11</th><th>Luke 4:1–13</th></tr></thead>
+          <tbody>
+            <tr><td>Stones to Bread</td><td>First</td><td>First</td></tr>
+            <tr><td>Temple Pinnacle</td><td>Second</td><td>Third</td></tr>
+            <tr><td>Worship of Satan</td><td>Third</td><td>Second</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="columns">
+        <div>
+          <h4>Matthew's emphasis</h4>
+          <ul>
+            <li><strong>Obedience over appetite:</strong> Word precedes material need; mission is not reduced to consumption.</li>
+            <li><strong>Reject spectacle:</strong> Do not test God for display; integrity over theatrics.</li>
+            <li><strong>Allegiance to God:</strong> Refuse power via compromise; preserve vocation.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Luke's emphasis</h4>
+          <ul>
+            <li><strong>Trust in provision:</strong> Dependence on God's timing and care.</li>
+            <li><strong>No provocation:</strong> Faith without forcing proof.</li>
+            <li><strong>Trajectory:</strong> Mission oriented toward Jerusalem and culmination.</li>
+          </ul>
+        </div>
+      </div>
+      <h4>Applications</h4>
+      <ul>
+        <li><strong>Scripture and prayer:</strong> Anchor decisions; cultivate discernment.</li>
+        <li><strong>Mission clarity:</strong> Reject materialism and spectacle; practice servant leadership.</li>
+        <li><strong>Rule of life:</strong> Maintain rhythms that stabilize character and direction.</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Core ministry and loving service</h3>
+      <div class="columns">
+        <div>
+          <h4>Five core activities</h4>
+          <ul>
+            <li>Preaching the Kingdom: nearness and nature of God's reign.</li>
+            <li>Teaching with authority: interpretation that transforms.</li>
+            <li>Healing and restoring: addressing suffering and exclusion.</li>
+            <li>Forgiving and reconciling: bridging humanity and God.</li>
+            <li>Confronting injustice: prophetic resistance to harm.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Third Mark of Mission</h4>
+          <ul>
+            <li><strong>Principle:</strong> Respond to human need by loving service.</li>
+            <li><strong>Practice:</strong> Pastoral visiting, mercy, volunteerism, outreach integrated into worship.</li>
+            <li><strong>Formation:</strong> Service shapes communal identity and moral stamina.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PFPL -->
+<section id="pfpl">
+  <div class="container">
+    <h2>PFPL: akademikong sulatin — kahulugan, estruktura, paghahanda</h2>
+    <p class="sub">Sanaysay (lakbay, piktoryal, replektibo), buod, sintesis, bionote, katitikan, agenda, panukalang proyekto, at talumpati — long-form guidance and checklists.</p>
+
+    <div class="block">
+      <h3>Sanaysay: lakbay, piktoryal, replektibo</h3>
+      <div class="columns">
+        <div>
+          <h4>Lakbay-sanaysay</h4>
+          <ul>
+            <li><strong>Layunin:</strong> Karanasan at pagninilay; magkuwento, magbigay-impormasyon, magbahagi ng aral.</li>
+            <li><strong>Katangian:</strong> Personal na perspektiba; masinop sa kultura, tao, at lugar; konkretong eksena.</li>
+            <li><strong>Estruktura:</strong> Hook → konteksto → karanasan (scene) → aral → tahimik na kongklusyon.</li>
+          </ul>
+          <p>Pag-uugnay ng obserbasyon sa mas malawak na tema (katatagan, pakikipagkapwa) ay nagpapalalim ng aral at tumitibay ang kabuuan.</p>
+        </div>
+        <div>
+          <h4>Piktoryal na sanaysay</h4>
+          <ul>
+            <li><strong>Dominanteng larawan:</strong> Caption ~60 salita; cohesive visual story.</li>
+            <li><strong>Pamantayan:</strong> Pokus, lohikal na estruktura, orihinalidad, kawilihan.</li>
+            <li><strong>Layout:</strong> Teksto sa ilalim ng larawan; ritmo at motif para sa coherence.</li>
+          </ul>
+          <h4>Replektibong sanaysay</h4>
+          <ul>
+            <li><strong>Unang panauhan:</strong> Tapat na tono; malinaw na aral at pananaw.</li>
+            <li><strong>Bahagi:</strong> Introduksyon → katawan (paglilinaw) → kongklusyon (sintesis).</li>
+            <li><strong>Sintesis:</strong> Pagsasama ng karanasan, teorya, at pananaw nang di nagiging abstrakto.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Buod, sintesis, bionote, katitikan, agenda, panukala</h3>
+      <div class="columns">
+        <div>
+          <h4>Buod</h4>
+          <ul>
+            <li><strong>Neutral:</strong> Tapat sa kabuuang punto; sariling pananalita; iwas bias.</li>
+            <li><strong>Hakbang:</strong> Tukuyin tema → alisin labis na detalye → panatilihin lohika.</li>
+          </ul>
+          <h4>Sintesis</h4>
+          <ul>
+            <li><strong>Uri:</strong> Background, literature review, explanatory, thesis-driven.</li>
+            <li><strong>Layunin:</strong> Pagsanib ng datos mula sa iba't ibang sanggunian; malinaw na ugnayan.</li>
+          </ul>
+          <h4>Bionote</h4>
+          <ul>
+            <li><strong>Maikli at pormal:</strong> Pangalan, tungkulin, tagumpay, interes; tumpak ang gramatika.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Katitikan at agenda</h4>
+          <ul>
+            <li><strong>Katitikan:</strong> Opisyal na tala ng desisyon, aksyon, dumalo, oras.</li>
+            <li><strong>Agenda:</strong> Lohikal na listahan na may time allocations.</li>
+          </ul>
+          <h4>Panukalang proyekto</h4>
+          <ul>
+            <li><strong>Nilalaman:</strong> Layunin, metodo, benepisyo, badyet, timeline; pamantayan ng tagumpay.</li>
+            <li><strong>Gamit:</strong> Paghingi ng pahintulot/pondo; paglutas ng suliranin.</li>
+          </ul>
+          <p>Panatilihin ang malinis na organisasyon: malinaw na layunin, ebidensya, at maayos na pagsipi ng sanggunian.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Talumpati: nilalaman, paraan, paghahanda</h3>
+      <div class="columns">
+        <div>
+          <h4>Nilalaman</h4>
+          <ul>
+            <li><strong>Impormatibo:</strong> Paliwanag ng konsepto/isyu; maayos ang pag-unlad ng ideya.</li>
+            <li><strong>Mapanghikayat:</strong> Ethos (kredibilidad), Logos (lohika), Pathos (emosyon) — balanse at tapat.</li>
+            <li><strong>Explanatory:</strong> Stepwise na paliwanag; konkretong halimbawa.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Paraan at delivery</h4>
+          <ul>
+            <li><strong>Impromptu:</strong> Mental map; panatilihin ang linaw.</li>
+            <li><strong>Ekstemporanyo:</strong> Outline at rehearsed transitions; kontrol sa daloy.</li>
+            <li><strong>Manuskripto:</strong> Buong teksto; bantayan ang monotony sa rehearsal.</li>
+            <li><strong>Structure:</strong> Hook → roadmap → body (3–4 puntos) → kongklusyon.</li>
+          </ul>
+          <p>Ethics: Tapat sa datos; iwas cherry-picking; maayos ang pagsipi at acknowledgement ng pinanggalingan.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Political Science -->
+<section id="political-science">
+  <div class="container">
+    <h2>Political science: foundations, power, governance, systems</h2>
+    <p class="sub">Definitions and roots, governance principles, power sources and authority types, historical stages, and the Philippine political framework.</p>
+
+    <div class="block">
+      <h3>Foundations and governance principles</h3>
+      <div class="columns">
+        <div>
+          <h4>Definitions and roots</h4>
+          <ul>
+            <li><strong>Politics:</strong> Art of governing well; leadership for the common good.</li>
+            <li><strong>Political science:</strong> Study of the state, institutions, laws, processes, and power relations.</li>
+            <li><strong>Roots:</strong> Polis (“city-state”); scire (“to know”).</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Governance principles</h4>
+          <ul>
+            <li>Participation, rule of law, transparency, accountability, responsiveness.</li>
+            <li><strong>Steering:</strong> Decision-making and implementation through power and authority.</li>
+          </ul>
+          <p>Apply these principles to local issues; identify gaps, stakeholders, and remedies consistent with institutional mandates.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Power, authority, and structures</h3>
+      <div class="columns">
+        <div>
+          <h4>Sources and types of power</h4>
+          <ul>
+            <li><strong>Force:</strong> Coercion to impose will.</li>
+            <li><strong>Influence:</strong> Persuasion via ideas and relationships.</li>
+            <li><strong>Authority:</strong> Institutionalized power recognized by subjects.</li>
+            <li><strong>Common forms:</strong> Referent, coercive, legitimate, expert, informational.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Authority frameworks</h4>
+          <ul>
+            <li>Traditional: rooted in customs.</li>
+            <li>Rational-legal: rules-based, bureaucratic legitimacy.</li>
+            <li>Charismatic: exceptional personal appeal.</li>
+          </ul>
+          <p>Consider distribution, circulation, and constraints across institutions; map actor relationships over time.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Historical stages and Philippine system</h3>
+      <div class="columns">
+        <div>
+          <h4>Stages of thought</h4>
+          <ul>
+            <li><strong>Religious:</strong> Leadership and law seen as divine or divinely sanctioned.</li>
+            <li><strong>Metaphysical:</strong> Institutions and laws humanly inspired.</li>
+            <li><strong>Modern:</strong> Institutions improvable by rulers and subjects; dynamic adaptation.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Philippine political framework</h4>
+          <ul>
+            <li><strong>GRP:</strong> Government of the Republic of the Philippines.</li>
+            <li><strong>Head of State:</strong> President.</li>
+            <li><strong>Form:</strong> Democracy, constitutional framework, separation of powers.</li>
+          </ul>
+          <p>Emphasize rule of law, participation, and accountability as pillars of democratic practice and public trust.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Biology -->
+<section id="biology">
+  <div class="container">
+    <h2>Biology: animal circulation, regulation, and health</h2>
+    <p class="sub">Diffusion limits, open vs closed systems, single vs double circulation, heart conduction and control, osmoregulation, and cardiovascular disease.</p>
+
+    <div class="block">
+      <h3>Limits of diffusion and need for circulation</h3>
+      <div class="columns">
+        <div>
+          <h4>Single-celled organisms</h4>
+          <ul>
+            <li>Short diffusion distances; high surface-area-to-volume ratio; passive diffusion meets metabolic needs.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Multicellular organisms</h4>
+          <ul>
+            <li>Long distances (e.g., lungs to peripheral cells) and lower SA:V require internal transport systems.</li>
+            <li>Circulatory systems deliver substrates and remove wastes efficiently under pressure.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Open vs closed circulatory systems</h3>
+      <div class="columns">
+        <div>
+          <h4>Open systems</h4>
+          <ul>
+            <li>Hemolymph bathes organs directly; sinuses allow less directed return.</li>
+            <li>Examples: arthropods, many mollusks.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Closed systems</h4>
+          <ul>
+            <li>Blood confined to vessels; higher pressure and efficiency; hemoglobin carries oxygen.</li>
+            <li>Examples: annelids, cephalopods, all vertebrates.</li>
+            <li>Supports higher activity and metabolic rates.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Circulatory pathways: single vs double loop</h3>
+      <div class="columns">
+        <div>
+          <h4>Single loop (fish)</h4>
+          <ul>
+            <li>Two-chambered heart: one atrium, one ventricle.</li>
+            <li>Heart → gills → body → heart; single pass per circuit.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Double loop (other vertebrates)</h4>
+          <ul>
+            <li>Pulmonary circuit: heart → lungs; gas exchange.</li>
+            <li>Systemic circuit: heart → body; delivery and return.</li>
+            <li>Better separation of oxygenated/deoxygenated blood; improved efficiency.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Human circulation: functions and pathway</h3>
+      <div class="columns">
+        <div>
+          <h4>Transport and homeostasis</h4>
+          <ul>
+            <li>Oxygen and nutrient delivery; waste removal; hormone distribution.</li>
+            <li>Immune defense (WBCs, antibodies), thermoregulation, fluid/pH balance.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Pathway and valves</h4>
+          <ul>
+            <li>Venae cavae → right atrium → right ventricle → pulmonary arteries → lungs → pulmonary veins → left atrium → left ventricle → aorta → systemic circulation.</li>
+            <li>AV valves with chordae tendineae prevent atrial backflow; semilunar valves prevent arterial backflow.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Heartbeat: conduction and control</h3>
+      <div class="columns">
+        <div>
+          <h4>Conduction</h4>
+          <ul>
+            <li>Myogenic rhythm; SAN initiates atrial contraction.</li>
+            <li>AVN → Bundle of His → Purkinje fibers; coordinate ventricular contraction.</li>
+            <li>Cycle phases: systole (contraction) and diastole (relaxation).</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Rate control</h4>
+          <ul>
+            <li>Sympathetic noradrenaline increases SAN firing; parasympathetic acetylcholine reduces it.</li>
+            <li>Hormones: adrenaline (rate/force), thyroxine (baseline metabolic demand and HR).</li>
+            <li>Influences: pH, temperature, size, age, sex, activity, stress, health, medications, environment, smoking/alcohol.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Osmoregulation and excretion</h3>
+      <div class="columns">
+        <div>
+          <h4>Invertebrates</h4>
+          <ul>
+            <li>Simple tubular organs balance water/salt; remove metabolic wastes; structure adapts to habitat.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Vertebrates</h4>
+          <ul>
+            <li>Kidneys filter blood and produce urine; maintain salt-water balance; integrate with endocrine regulation.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Cardiovascular diseases</h3>
+      <div class="columns">
+        <div>
+          <h4>Arteriosclerosis and hypertension</h4>
+          <ul>
+            <li>Plaque narrows arteries and hardens walls; blood flow restricted.</li>
+            <li>Hypertension elevates arterial pressure; risks include stroke via vessel rupture.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Angina and myocardial infarction</h4>
+          <ul>
+            <li>Angina: chest pain from insufficient oxygen to heart muscle; warning sign.</li>
+            <li>Myocardial infarction: coronary occlusion; tissue death; severity depends on area affected.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UCSP -->
+<section id="ucsp">
+  <div class="container">
+    <h2>UCSP: process of socialization</h2>
+    <p class="sub">Context, content, mechanisms and stages, consequences, identity formation theories, norms, statuses, and roles.</p>
+
+    <div class="block">
+      <h3>Pillars and context</h3>
+      <div class="columns">
+        <div>
+          <h4>Context</h4>
+          <ul>
+            <li>Culture and history: shared norms, language, traditions.</li>
+            <li>Social structure: institutions and power dynamics.</li>
+            <li>Ascribed status: traits at birth; interpersonal relations and contact.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Content</h4>
+          <ul>
+            <li>Norms and rules: expectations of conduct.</li>
+            <li>Values and beliefs: standards of worth.</li>
+            <li>Roles: behavior tied to status.</li>
+            <li>Language and symbols: communication and meaning.</li>
+            <li>Skills: practical abilities for daily life.</li>
+          </ul>
+          <p>Socialization transmits culture and equips individuals to participate in social life with predictable role performance.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Mechanisms, stages, and consequences</h3>
+      <div class="columns">
+        <div>
+          <h4>Mechanisms</h4>
+          <ul>
+            <li>Imitation and modeling; reward and punishment; instruction; anticipatory socialization.</li>
+          </ul>
+          <h4>Stages</h4>
+          <ul>
+            <li>Primary: early family learning.</li>
+            <li>Secondary: school, peers, workplace.</li>
+            <li>Resocialization: adopting new norms in new contexts.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Consequences</h4>
+          <ul>
+            <li>Individual: self and identity, impulse control, capacity for social life.</li>
+            <li>Society: transmission, role performance, order and stability, inequality reproduction.</li>
+          </ul>
+          <p>Enculturation emphasizes culture learning, while socialization frames identity formation through norms and roles.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Identity theories and role dynamics</h3>
+      <div class="columns">
+        <div>
+          <h4>Identity formation</h4>
+          <ul>
+            <li>Freud: Id/Ego/Superego; unconscious dynamics; early childhood impact.</li>
+            <li>Piaget: cognitive development stages via active exploration.</li>
+            <li>Kohlberg: moral reasoning stages through dilemmas.</li>
+            <li>Erikson: eight psychosocial crises across lifespan.</li>
+            <li>Mead: social self via interaction; generalized other.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Norms, statuses, roles</h4>
+          <ul>
+            <li>Status: ascribed vs achieved positions.</li>
+            <li>Role: expected behavior tied to status.</li>
+            <li>Role conflict: competing expectations across statuses.</li>
+            <li>Role strain: tension within one status.</li>
+            <li>Role exit: leaving a role after doubt or change.</li>
+          </ul>
+          <p>Balancing multiple statuses requires prioritization and negotiation to maintain coherent identity and performance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Physics -->
+<section id="physics">
+  <div class="container">
+    <h2>Physics: forces, free body diagrams, First Law</h2>
+    <p class="sub">Core forces and definitions, friction types, FBD techniques, and practical scenarios to apply the First Law of Motion.</p>
+
+    <div class="block">
+      <h3>Force types and definitions</h3>
+      <div class="columns">
+        <div>
+          <h4>Core forces</h4>
+          <ul>
+            <li><strong>Applied:</strong> External push or pull.</li>
+            <li><strong>Normal:</strong> Perpendicular contact force from a surface.</li>
+            <li><strong>Gravity:</strong> Attraction due to mass; weight is gravitational force.</li>
+            <li><strong>Tension:</strong> Pull through rope, string, or cable.</li>
+            <li><strong>Air resistance:</strong> Drag opposing motion through air.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Friction and diagram basics</h4>
+          <ul>
+            <li><strong>Friction:</strong> Static (no motion) vs kinetic (moving); both oppose relative motion.</li>
+            <li><strong>FBDs:</strong> Isolate object; arrows for forces; label type, direction, magnitude.</li>
+            <li><strong>Components:</strong> Resolve parallel and perpendicular on inclines; find net force for equilibrium or acceleration.</li>
+          </ul>
+          <p>Newton's First Law (inertia) states that an object maintains its state of motion unless acted on by a net external force.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Practice scenarios</h3>
+      <ul>
+        <li><strong>Box on table:</strong> Gravity down; normal up; applied force right; friction left; negligible air resistance indoors.</li>
+        <li><strong>Inclined plane:</strong> Resolve gravity into parallel and perpendicular components; include friction if present.</li>
+        <li><strong>Suspended mass:</strong> Tension balances weight at rest; for multiple cords, use vector resolution and angles.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Chemistry -->
+<section id="chemistry">
+  <div class="container">
+    <h2>Chemistry: solutions, colligative properties, concentrations</h2>
+    <p class="sub">Solubility and miscibility factors, electrolytes vs non-electrolytes, vapor pressure relations, and common concentration expressions.</p>
+
+    <div class="block">
+      <h3>Solubility, miscibility, colligative properties</h3>
+      <div class="columns">
+        <div>
+          <h4>Solubility drivers</h4>
+          <ul>
+            <li>Polarity (“like dissolves like”); miscibility for liquids.</li>
+            <li>Particle size and stirring affect dissolution rate.</li>
+            <li>Temperature often increases solubility of solids; decreases gas solubility.</li>
+            <li>Pressure strongly affects gases (e.g., Henry's relation).</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Colligative properties</h4>
+          <ul>
+            <li>Depend on particle number: boiling point elevation, freezing point depression, vapor pressure lowering, osmotic pressure.</li>
+            <li>Electrolytes ionize and conduct; non-electrolytes do not.</li>
+          </ul>
+          <p>Solutions exhibit predictable changes based on solute quantity, not identity; this underpins many practical applications.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Vapor pressure and Raoult's relation</h3>
+      <ul>
+        <li>Non-volatile solute lowers solvent's vapor pressure.</li>
+        <li>Relation (ideal): P(solution solvent) = X(solvent) × P°(pure solvent).</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Concentration expressions and practice</h3>
+      <div class="columns">
+        <div>
+          <h4>Percent and fraction</h4>
+          <ul>
+            <li>% m/m = (mass solute / mass solution) × 100</li>
+            <li>% v/v = (volume solute / volume solution) × 100</li>
+            <li>% m/v = (mass solute / volume solution) × 100</li>
+            <li>Mole fraction: xA = nA / (nA + nB), xA + xB = 1</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Molality, molarity, ppm</h4>
+          <ul>
+            <li>Molality m = moles solute / kilogram solvent</li>
+            <li>Molarity M = moles solute / liter solution</li>
+            <li>PPM = (mass solute / mass solution) × 10^6</li>
+          </ul>
+          <p>Practice: compute moles from mass and molar mass; then calculate M, m, and x using provided totals.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mandarin -->
+<section id="mandarin">
+  <div class="container">
+    <h2>Mandarin: everyday language</h2>
+    <p class="sub">Family and hobbies vocabulary, food and drinks, sentence frames, tones, and a steady practice routine.</p>
+
+    <div class="block">
+      <h3>Family members and core Q&A</h3>
+      <ul>
+        <li><strong>你好！你家有几口人？</strong> Ni hao! Ni jia you jǐ kou rén? — Hello! How many people are in your family?</li>
+        <li><strong>我家有五口人。</strong> Wo jia you wu kou ren. — There are five people in my family.</li>
+        <li><strong>他们是谁？</strong> Tamen shi shei? — Who are they?</li>
+        <li><strong>这是我爸爸、妈妈、哥哥、妹妹和我。</strong> Zhè shi wo baba, mama, gēge, mèimei hé wo. — Father, mother, older brother, younger sister, and me.</li>
+      </ul>
+      <p>Pronunciation: practice tone pairs daily; distinguish retroflex zh/ch/sh/r from palatal j/q/x; mind finals (-ang vs -an, -eng vs -en).</p>
+    </div>
+
+    <div class="block">
+      <h3>Hobbies 爱好 / 兴趣</h3>
+      <div class="columns">
+        <div>
+          <h4>Vocabulary</h4>
+          <ul>
+            <li>看书 kàn shū — reading</li>
+            <li>听音乐 tīng yīnyuè — listening to music</li>
+            <li>看电影 kàn diànyǐng — watching movies</li>
+            <li>跳舞 tiàowǔ — dancing</li>
+            <li>唱歌 chànggē — singing</li>
+            <li>画画 huàhuà — drawing</li>
+            <li>打篮球 dǎ lánqiú — basketball</li>
+            <li>打羽毛球 dǎ yǔmáoqiú — badminton</li>
+            <li>游泳 yóuyǒng — swimming</li>
+            <li>打游戏 dǎ yóuxì — gaming</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Sentence frames</h4>
+          <ul>
+            <li><strong>我喜欢＿＿。</strong> Wǒ xǐhuan __. — I like __.</li>
+            <li><strong>你喜欢唱歌吗？</strong> Nǐ xǐhuan chànggē ma? — Do you like singing?</li>
+            <li><strong>我喜欢。</strong> Wǒ xǐhuan. — I like it.</li>
+            <li><strong>我不喜欢。</strong> Wǒ bù xǐhuan. — I don't like it.</li>
+          </ul>
+          <p>Practice: ask preferences using “你喜欢…吗？” and respond with 喜欢 / 不喜欢; expand with time and place.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Snacks 小吃 and drinks 饮料</h3>
+      <div class="columns">
+        <div>
+          <h4>Snacks</h4>
+          <ul>
+            <li>薯条 shǔtiáo — fries</li>
+            <li>薯片 shǔpiàn — chips</li>
+            <li>冰淇淋 bīngqílín — ice cream</li>
+            <li>汉堡 hànbǎo — burger</li>
+            <li>蛋糕 dàngāo — cake</li>
+            <li>饼干 bǐnggān — biscuit/cookie</li>
+          </ul>
+          <h4>Eat pattern</h4>
+          <ul>
+            <li><strong>我喜欢吃薯条。</strong> Wǒ xǐhuan chī shǔtiáo. — I like to eat fries.</li>
+            <li><strong>他喜欢吃蛋糕。</strong> Tā xǐhuan chī dàngāo. — He likes to eat cake.</li>
+            <li><strong>我不喜欢吃汉堡。</strong> Wǒ bù xǐhuan chī hànbǎo. — I don't like burgers.</li>
+            <li><strong>她不喜欢吃饼干。</strong> Tā bù xǐhuan chī bǐnggān. — She doesn't like biscuits.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Drinks</h4>
+          <ul>
+            <li>水 shuǐ — water</li>
+            <li>咖啡 kāfēi — coffee</li>
+            <li>汽水 qìshuǐ — soft drinks</li>
+            <li>果汁 guǒzhī — juice</li>
+          </ul>
+          <h4>Drink pattern</h4>
+          <ul>
+            <li><strong>我喜欢喝水。</strong> Wǒ xǐhuan hē shuǐ. — I like to drink water.</li>
+            <li><strong>她喜欢喝果汁。</strong> Tā xǐhuan hē guǒzhī. — She likes to drink juice.</li>
+            <li><strong>我不喜欢喝咖啡。</strong> Wǒ bù xǐhuan hē kāfēi. — I don't like coffee.</li>
+            <li><strong>他不喜欢喝汽水。</strong> Tā bù xǐhuan hē qìshuǐ. — He doesn't like soft drinks.</li>
+          </ul>
+          <p>Routine: spaced repetition for vocabulary; record and compare pronunciation; build micro-dialogues with greeting → preference → time/place.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Intramurals -->
+<section id="intramurals">
+  <div class="container">
+    <h2>THS intramurals 2025</h2>
+    <p class="sub">Eligibility, team line-ups, conduct, protests, tournament format, ranking, and event-specific rules.</p>
+
+    <div class="block">
+      <h3>Eligibility, uniforms, banners</h3>
+      <ul>
+        <li>Bonafide Trinity High School students only; minimum 1 and maximum 2 events per student (MAPEH requirement); parade/cheer not counted.</li>
+        <li>Submit 1×1 photo for galleries (basketball, volleyball, dodgeball); parent approval by deadline.</li>
+        <li>Uniforms: team shirts with numbers (front/back, 1–99); sports goggles allowed; reading glasses prohibited for ball games.</li>
+        <li>Prepare team banner (tarpaulin) by the specified deadline for opening day.</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Line-ups, encoding, conduct</h3>
+      <div class="columns">
+        <div>
+          <h4>Entries and submissions</h4>
+          <ul>
+            <li>Encode via official Google Sheets; adviser + up to two student coordinators.</li>
+            <li>Include gallery photos for ball games; no changes after submission; deadlines strictly enforced.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Behavior and compliance</h4>
+          <ul>
+            <li>No intoxicants; respect officials; clarifications via game captain.</li>
+            <li>Violence or walkouts lead to disqualification; avoid stalling and influencing officials.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Protests, defaults, incomplete teams</h3>
+      <div class="columns">
+        <div>
+          <h4>Protests</h4>
+          <ul>
+            <li>Mark “Game under protest” on score sheet; submit written protest within 30 minutes post-game.</li>
+            <li>Only technical matters; judgment calls are not contestable.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Defaults and participation</h4>
+          <ul>
+            <li>15-minute defaulting time across events; minimum player counts enforced per event.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Tournament format and ranking highlights</h3>
+      <div class="columns">
+        <div>
+          <h4>Formats</h4>
+          <ul>
+            <li>Single round robin for basketball, dodgeball, esports, volleyball; scheduling via draw lots.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Ranking and ties</h4>
+          <ul>
+            <li>Points systems per event; ties broken via bench cheering totals (≥3 teams) or circuit game (2 teams).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Event mechanics highlights</h3>
+      <ul>
+        <li><strong>Basketball (boys):</strong> Two 8-minute halves (running); last 2 minutes of 2nd half stop time; timeout and tech foul rules; overtime format.</li>
+        <li><strong>Basketball 3×3 (girls):</strong> 10 minutes or 15 points; 10-second shot clock; roster minimums.</li>
+        <li><strong>Volleyball:</strong> Elims/semis single set to 30; finals best-of-three to 15 (max 17); no libero.</li>
+        <li><strong>Dodgeball:</strong> Coed lineup; live ball rules; boundaries; opening rush and 5-second violation; honor system with monitor.</li>
+        <li><strong>Esports (ML, COD BR):</strong> Device rules, drafting, tie-breakers, anti-cheating, disqualification grounds; ping check and compliance photos.</li>
+        <li><strong>Parade, mural, bench cheering:</strong> Criteria, time allocations, penalties, judging structure.</li>
+        <li><strong>Games of the General:</strong> Movement rules; piece interactions; win conditions.</li>
+        <li><strong>Quiz Bee:</strong> Rounds (easy/average/difficult), lifelines, scoring, tiebreakers, empowerment focus.</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Awards</h3>
+      <ul>
+        <li>General Championship trophies/tokens for top teams; event banners/tokens; special awards (Mythical, MVP).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>Academix</h4>
+        <p class="muted">A formal, organized learning hub. Clear sections, extended coverage, and calm UI for sustained understanding.</p>
+        <p><a href="https://academixtua.vercel.app/" target="_blank" rel="noopener">Open minigames</a></p>
+      </div>
+      <div>
+        <h4>Subjects</h4>
+        <ul>
+          <li><a href="#christian-ed">Christian Ed</a></li>
+          <li><a href="#pfpl">PFPL</a></li>
+          <li><a href="#political-science">Political Science</a></li>
+          <li><a href="#biology">Biology</a></li>
+          <li><a href="#ucsp">UCSP</a></li>
+          <li><a href="#physics">Physics</a></li>
+          <li><a href="#chemistry">Chemistry</a></li>
+          <li><a href="#mandarin">Mandarin</a></li>
+          <li><a href="#intramurals">Intramurals</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="#subjects">Overview</a></li>
+          <li><a href="#overview">Top</a></li>
+          <li><a href="#play">Practice through play</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Study cues</h4>
+        <ul>
+          <li>Read steadily; summarize each block in one sentence.</li>
+          <li>Use the sidebar to navigate by section goals.</li>
+          <li>Alternate notes with minigames to consolidate learning.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <span>© 2025 Academix. All rights reserved.</span>
+      <span>Designed for clarity, discipline, and trust.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Chat bot bar -->
+<script
+  chatbot_id="68cebba34376bc35a8689c0d"
+  data-type="bar"
+  src="https://app.thinkstack.ai/bot/thinkstackai-loader.min.js">
+</script>
+
+<!-- Smooth internal navigation -->
+<script>
+(function(){
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
